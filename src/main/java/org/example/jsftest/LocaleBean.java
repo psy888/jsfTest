@@ -15,9 +15,11 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.Application;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
 import java.util.Locale;
 import java.util.Map;
@@ -58,11 +60,15 @@ public class LocaleBean
 
     public void setLanguage(String language)
     {
-        FacesContext.getCurrentInstance().getApplication().setMessageBundle("msg");
+        // FacesContext.getCurrentInstance().getApplication().setMessageBundle("msg");
         locale = new Locale(language);
         FacesContext.getCurrentInstance().getViewRoot().setLocale(locale);
+        System.out.println("locale Default = " + FacesContext.getCurrentInstance().getApplication().getDefaultLocale());
+        Application app = FacesContext.getCurrentInstance().getApplication();
+        UIViewRoot rootView = FacesContext.getCurrentInstance().getViewRoot();
         System.out.println("title = " + FacesContext.getCurrentInstance().getApplication().getResourceBundle(FacesContext.getCurrentInstance(),"msg").getString("title"));
-        System.out.println("title = " + FacesContext.getCurrentInstance().getApplication().getResourceBundle(FacesContext.getCurrentInstance(),"msg").getString("title"));
+        System.out.println("message = " + FacesContext.getCurrentInstance().getApplication().getResourceBundle(FacesContext.getCurrentInstance(),"msg").getString("message"));
+        System.out.println("cur locale = " + FacesContext.getCurrentInstance().getViewRoot().getLocale().getLanguage());
         System.out.println(service.getGreetingMessage());
 
     }
