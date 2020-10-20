@@ -9,9 +9,9 @@
 
     <h2>Ajax Example</h2>
     <h:form>
-        <h:inputText id="inputName" value="#{userData.name}"></h:inputText>
+        <h:inputText id="inputName" value="#{userData.name}"/>
         <a4j:commandButton value="Show Message">
-            <a4j:ajax execute="inputName" render="outputMessage"/>
+
         </a4j:commandButton>
         <h2><h:outputText id="outputMessage"
                           value="#{userData.welcomeMessage != null ? userData.welcomeMessage : ''}"

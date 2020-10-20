@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:a4j="http://richfaces.org/a4j"
+                xmlns:rich="http://richfaces.org/rich">
+
+    <rich:panel header="#{msg['orderFormHeader']}">
+        <h:dataTable value="#{orderView.currentOrder.itemsDTO}" var="orderItem">
+
+            <rich:column>
+                <f:facet name="header">
+                    <h:panelGroup>
+                        <h:outputText value="#{msg['itemTitleColumn']}"/>
+                    </h:panelGroup>
+                </f:facet>
+                <h:outputText value="#{orderItem.coffeeType.name}"/>
+            </rich:column>
+
+            <rich:column>
+                <f:facet name="header">
+                    <h:panelGroup>
+                        <h:outputText value="#{msg['priceColumn']}"/>
+                    </h:panelGroup>
+                </f:facet>
+                <h:outputText value="#{orderItem.coffeeType.price}">
+                    <f:convertNumber type="currency" currencySymbol="#{msg['currency']}"/>
+                </h:outputText>
+                <h:outputText value="#{msg['currency']}"/>
+            </rich:column>
+
+            <rich:column>
+                <f:facet name="header">
+                    <h:panelGroup>
+                        <h:outputText value="#{msg['quantityColumn']}"/>
+                    </h:panelGroup>
+                </f:facet>
+                <h:outputText value="#{orderItem.quantity}"/>
+            </rich:column>
+
+            <rich:column>
+                <f:facet name="header">
+                    <h:panelGroup>
+                        <h:outputText value="#{msg['totalPriceColumn']}"/>
+                    </h:panelGroup>
+                </f:facet>
+                <h:outputText value="#{orderItem.totalPrice}">
+                    <f:convertNumber type="currency" currencySymbol="#{msg['currency']}"/>
+                </h:outputText>
+            </rich:column>
+
+<!--            total sum row               -->
+            <rich:column colspan="3">
+                <h:outputText value="#{msg['totalPrice']}"/>
+            </rich:column>
+            <rich:column colspan="1">
+                <h:outputText value="#{orderView.currentOrder.totalSum}"/>
+            </rich:column>
+
+<!--            delivery row            -->
+            <rich:column colspan="3">
+                <h:outputText value="#{msg['deliveryLabel']}"/>
+            </rich:column>
+            <rich:column colspan="1">
+                <h:outputText value="#{orderView.currentOrder.totalSum}"/>
+            </rich:column>
+
+
+        </h:dataTable>
+
+
+    </rich:panel>
+
+</ui:composition>

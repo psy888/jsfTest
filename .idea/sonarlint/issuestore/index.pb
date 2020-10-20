@@ -27,3 +27,25 @@ M
 src/main/webapp/content.xhtml,e\d\ed7289946a6c0c736a57dfedc28412e64aca3b2e
 J
 src/main/webapp/home.xhtml,9\8\98bc115dd7bbb7841350ee4cb878c6ab442e7c1f
+N
+src/main/webapp/home_old.xhtml,5\d\5d789d210f7eb0e1c2d47787168c4781b7b54b6e
+X
+(src/main/webapp/WEB-INF/faces-config.xml,9\2\921ab541b29cd2aba50bbba38a0af79890ebe16a
+b
+2src/main/java/org/example/jsftest/Application.java,8\3\83aff4df4e58cbc5ca1423e0a4592974998c92aa
+m
+=src/main/java/org/example/jsftest/service/MessageService.java,0\3\03135ed62ff2096f10129e9c357843de33a4739d
+e
+5src/main/java/org/example/jsftest/util/ViewScope.java,0\6\0622b76f1428034a4e2a199519430430ba911fda
+q
+Asrc/main/java/org/example/jsftest/service/MessageServiceImpl.java,2\e\2e28f6c3a5f9e1b26fe9aac1c3f998abf6ac3b41
+]
+-src/main/java/org/example/jsftest/Config.java,8\f\8fa64bce729d37a4be354e841ed98ae12015336c
+]
+-src/main/java/org/example/jsftest/Locale.java,5\8\580ab813546ed19c687e7ea44fee6952c6e7c4c4
+a
+1src/main/java/org/example/jsftest/LocaleBean.java,1\a\1a31686fc9f9c12cdf350f099505cc2d9ecd46d2
+i
+9src/main/resources/org/example/jsftest/msgs_en.properties,9\9\99d6668bc6a577f2ea62c6518ec6e1044fec3e8e
+i
+9src/main/resources/org/example/jsftest/msgs_ru.properties,9\7\97c853de7f9ad52fefb97f3076e61548e254538a
