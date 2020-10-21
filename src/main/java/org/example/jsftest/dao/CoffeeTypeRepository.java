@@ -9,11 +9,19 @@ import java.util.List;
 @Repository
 public class CoffeeTypeRepository
 {
-    public List<CoffeeType> getAllCoffeeType(){
-        return new ArrayList<>();
-    }
+
 
     public List<CoffeeType> getAvailableCoffeeTypes(){
-        return new ArrayList<>();
+        ArrayList<CoffeeType> list = new ArrayList<>();
+        for(int i = 0; i < 5; i++)
+        {
+            CoffeeType ct = new CoffeeType();
+            ct.setName("Coffee " + i);
+            ct.setEnabled(true);
+            ct.setPrice((1+i)*2);
+            list.add(ct);
+        }
+
+        return list;
     }
 }

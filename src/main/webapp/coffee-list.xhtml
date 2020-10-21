@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich">
+<h:head></h:head>
+<h:body>
+    <ui:component>
+        <rich:panel>
+            <h:form>
+                <rich:dataTable value="#{coffeeListView.orderItems}" var="listItem" id="listTable">
+
+
+                    <!--order Column-->
+                    <rich:column id="isAddedToOrderColumn">
+                        <f:facet name="header">
+                            <h:panelGroup>
+                                <h:outputText value="#{msg['ordered']}"/>
+                            </h:panelGroup>
+                        </f:facet>
+                        <h:selectBooleanCheckbox id="isOrdered" value="#{listItem.isOrdered}">
+                            <a4j:ajax event="click" execute="@this" render="quantitySpinner"/>
+                        </h:selectBooleanCheckbox>
+                    </rich:column>
+
+
+                    <!--coffee Type Column-->
+                    <rich:column id="itemNameColumn">
+                        <f:facet name="header">
+                            <h:panelGroup>
+                                <h:outputText value="#{msg['itemTitleColumn']}"/>
+                            </h:panelGroup>
+                        </f:facet>
+                        <h:outputText value="#{listItem.coffeeType.name}"/>
+                    </rich:column>
+
+
+                    <!--coffee price column -->
+                    <rich:column id="priceColumn">
+                        <f:facet name="header">
+                            <h:panelGroup>
+                                <h:outputText value="#{msg['priceColumn']}"/>
+                            </h:panelGroup>
+                        </f:facet>
+                        <h:outputText value="#{listItem.coffeeType.price}">
+                            <f:convertNumber type="currency" currencySymbol="#{msg['currency']}"/>
+                        </h:outputText>
+                    </rich:column>
+
+
+                    <!-- quantity column-->
+                    <rich:column id="quantityColumn">
+                        <f:facet name="header">
+                            <h:panelGroup>
+                                <h:outputText value="#{msg['quantityColumn']}"/>
+                            </h:panelGroup>
+                        </f:facet>
+                        <rich:inputNumberSpinner id="quantitySpinner" value="#{listItem.quantity}" validator="#{coffeeListView.quantityValidator}" minValue="-100">
+                            <a4j:ajax event="change" execute="@this" render="isOrdered"/>
+                        </rich:inputNumberSpinner>
+                        <rich:message id="errMsg" for="quantitySpinner" ajaxRendered="true"/>
+                    </rich:column>
+                </rich:dataTable>
+
+
+                <!-- make order Btn-->
+                <a4j:commandButton value="#{msg['makeAnOrder']}">
+                    <a4j:ajax execute="#{coffeeListView.doOrder()}"/>
+                </a4j:commandButton>
+            </h:form>
+        </rich:panel>
+        <h:outputText value="#{msg['freeCupNum']}"/>
+    </ui:component>
+</h:body>
+</html>

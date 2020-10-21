@@ -1,9 +1,7 @@
 package org.example.jsftest.mBeans;
 
 import lombok.Data;
-import org.example.jsftest.dto.OrderDTO;
 import org.example.jsftest.dto.OrderItemDTO;
-import org.example.jsftest.entity.CoffeeType;
 import org.example.jsftest.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -13,34 +11,32 @@ import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Component
-@SessionScope
 @Data
+@SessionScope
 public class CoffeeListView
 {
-    // private CoffeeService coffeeService;
+    @Autowired
     private OrderService orderService;
 
-    private List<OrderItemDTO> orderItems;
 
 
-    public void makeNewOrder(){
-        orderService.makeOrder(orderItems);
+    public String doOrder()
+    {
+        //toDo navigate to delivery page
+        return "delivery";
     }
 
-    public List<OrderItemDTO> getOrderItems(){
-        orderItems = orderService.getAvailableOrderItemDTOs();
-        return orderItems;
+    public List<OrderItemDTO> getOrderItems()
+    {
+        return orderService.getCurrentOrderDto().getItemsDTO();
     }
+
 
     //Validators
-    public void quantityValidator(final FacesContext facesContext,
-                                  final UIComponent uiComponent,
-                                  final Object o) throws ValidatorException
+    public void quantityValidator(final FacesContext facesContext, final UIComponent uiComponent, final Object o) throws ValidatorException
     {
         try
         {
@@ -50,10 +46,10 @@ public class CoffeeListView
             {
                 throw new NumberFormatException();
             }
-        }catch(NumberFormatException e){
-            throw new ValidatorException(new FacesMessage(
-                    facesContext.getApplication().getResourceBundle(facesContext,"org.example.jsftest.msgs").getString("validatorQuantityMsg")
-                    , null)); //  get msg from bundle
+        }
+        catch(NumberFormatException e)
+        {
+            throw new ValidatorException(new FacesMessage(facesContext.getApplication().getResourceBundle(facesContext, "msg").getString("validatorQuantityMsg"), null)); //  get msg from bundle
         }
     }
 }

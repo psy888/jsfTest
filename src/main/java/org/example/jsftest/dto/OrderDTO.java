@@ -2,6 +2,8 @@ package org.example.jsftest.dto;
 
 import lombok.Builder;
 import lombok.Data;
+import org.example.jsftest.util.SumDiscountCalculator;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -15,20 +17,37 @@ public class OrderDTO
     private LocalDateTime orderDateTime;
     private String deliveryAddress;
     private String deliveryPerson;
-    private double totalSum;
     private double deliveryPrice;
+    private double totalSum;
 
 
-    public double getTotalSum(){
-        totalSum =  itemsDTO.stream().collect(Collectors.summingDouble(OrderItemDTO::getTotalPrice));
+
+
+    /**
+     * get total sum of order without delivery
+     * @return
+     */
+    public double getTotalSumWODelivery(){
+        return SumDiscountCalculator.getTotal(this,false);
+    }
+
+    public double getTotalSum()
+    {
+        this.totalSum = SumDiscountCalculator.getTotal(this, true);
         return totalSum;
     }
 
-    public double getTotalPriceWithDelivery()
+    public double getDeliveryPrice()
     {
-        return 0;
+        deliveryPrice = SumDiscountCalculator.getDeliveryPrice(this);
+        return deliveryPrice;
     }
 
+
+    public List<OrderItemDTO> getOrderedItemsDTO()
+    {
+        return itemsDTO.stream().filter(OrderItemDTO::getIsOrdered).collect(Collectors.toList());
+    }
     // /**
     //  * Map OrderItemDTO into OrderItem Entity
     //  * @param items dto

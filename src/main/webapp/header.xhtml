@@ -1,20 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<ui:composition xmlns = "http://www.w3.org/1999/xhtml"
-                xmlns:h = "http://java.sun.com/jsf/html"
-                xmlns:f = "http://java.sun.com/jsf/core"
-                xmlns:ui="http://java.sun.com/jsf/facelets"
-                xmlns:a4j="http://richfaces.org/a4j"
-                xmlns:rich="http://richfaces.org/rich">
-    <h1>header</h1>
-
-    <h2>Ajax Example</h2>
-    <h:form>
-        <h:inputText id="inputName" value="#{userData.name}"/>
-        <a4j:commandButton value="Show Message">
-
-        </a4j:commandButton>
-        <h2><h:outputText id="outputMessage"
-                          value="#{userData.welcomeMessage != null ? userData.welcomeMessage : ''}"
-        /></h2>
-    </h:form>
-</ui:composition>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich">
+<h:head></h:head>
+<h:body>
+    <ui:composition>
+        <h:form>
+            <h:selectOneMenu value="#{localeBean.language}" onchange="submit()">
+                <f:selectItem itemValue="en" itemLabel="English"/>
+                <f:selectItem itemValue="ru" itemLabel="Russian"/>
+            </h:selectOneMenu>
+        </h:form>
+    </ui:composition>
+</h:body>
+</html>
