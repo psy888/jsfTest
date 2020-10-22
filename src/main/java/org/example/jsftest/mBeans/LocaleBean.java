@@ -1,4 +1,4 @@
-package org.example.jsftest;
+package org.example.jsftest.mBeans;
 
 
 import lombok.AllArgsConstructor;
@@ -14,8 +14,8 @@ import java.util.Locale;
 @Component
 @SessionScope
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
+// @NoArgsConstructor
+// @AllArgsConstructor
 public class LocaleBean
 {
     private Locale locale;

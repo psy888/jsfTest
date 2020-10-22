@@ -9,6 +9,7 @@
   <aop:aspectj-autoproxy/>
 
   <context:component-scan base-package="org.example.jsftest"/>
+  <context:property-placeholder location="classpath*:application.properties"/>
   <bean
           class="org.springframework.beans.factory.config.CustomScopeConfigurer">
     <property name="scopes">

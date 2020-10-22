@@ -28,7 +28,6 @@
 
 
   <dependencies>
-    <!-- https://mvnrepository.com/artifact/com.sun.faces/jsf-api -->
     <dependency>
       <groupId>com.sun.faces</groupId>
       <artifactId>jsf-api</artifactId>
@@ -36,7 +35,6 @@
     </dependency>
 
 
-    <!-- https://mvnrepository.com/artifact/com.sun.faces/jsf-impl -->
     <dependency>
       <groupId>com.sun.faces</groupId>
       <artifactId>jsf-impl</artifactId>
@@ -90,7 +88,6 @@
       </exclusions>
     </dependency>
 
-    <!-- https://mvnrepository.com/artifact/org.richfaces/richfaces -->
     <dependency>
       <groupId>org.richfaces</groupId>
       <artifactId>richfaces</artifactId>
@@ -113,6 +110,7 @@
       <artifactId>tomcat-embed-core</artifactId>
       <version>9.0.21</version>
     </dependency>
+
   </dependencies>
 
   <build>
@@ -127,6 +125,26 @@
         <plugin>
           <artifactId>maven-resources-plugin</artifactId>
           <version>3.0.2</version>
+          <executions>
+            <execution>
+              <id>copy-resources</id>
+              <phase>validate</phase>
+              <goals>
+                <goal>copy-resources</goal>
+              </goals>
+
+              <configuration>
+                <outputDirectory>${basedir}/target/jsfTest/resources
+                </outputDirectory>
+                <resources>
+                  <resource>
+                    <directory>src/main/webapp/resources</directory>
+                    <filtering>true</filtering>
+                  </resource>
+                </resources>
+              </configuration>
+            </execution>
+          </executions>
 
         </plugin>
         <plugin>

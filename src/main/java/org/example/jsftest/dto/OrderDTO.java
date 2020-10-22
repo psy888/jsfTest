@@ -46,7 +46,8 @@ public class OrderDTO
 
     public List<OrderItemDTO> getOrderedItemsDTO()
     {
-        return itemsDTO.stream().filter(OrderItemDTO::getIsOrdered).collect(Collectors.toList());
+        List<OrderItemDTO> list =itemsDTO.stream().filter(OrderItemDTO::getIsOrdered).collect(Collectors.toList());
+        return list;
     }
     // /**
     //  * Map OrderItemDTO into OrderItem Entity

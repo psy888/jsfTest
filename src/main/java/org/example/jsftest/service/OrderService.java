@@ -7,6 +7,7 @@ import org.example.jsftest.dto.OrderItemDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.annotation.ApplicationScope;
+import org.springframework.web.context.annotation.RequestScope;
 import org.springframework.web.context.annotation.SessionScope;
 
 import java.time.LocalDateTime;
@@ -17,6 +18,7 @@ import static java.util.Objects.isNull;
 
 @Service
 @Data
+@RequestScope
 public class OrderService
 {
     @Autowired

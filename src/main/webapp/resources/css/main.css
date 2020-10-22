@@ -1,0 +1,12 @@
+body{
+    font-size: 16pt !important;
+}
+.section{
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+}
+
+table tr td{
+    text-align: center;
+}

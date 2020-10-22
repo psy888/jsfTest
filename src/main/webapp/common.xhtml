@@ -5,24 +5,27 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:a4j="http://richfaces.org/a4j"
       xmlns:rich="http://richfaces.org/rich">
-<h:head></h:head>
+<h:head>
+    <h:outputStylesheet name="css/main.css"/>
+    <title>#{msg['title']}</title>
+</h:head>
 <h:body>
-        <div class="section">
-            <ui:insert name="header">
-                <ui:include src="header.xhtml"/>
-            </ui:insert>
-        </div>
+    <div class="section">
+        <ui:insert name="header">
+            <ui:include src="template/header.xhtml"/>
+        </ui:insert>
+    </div>
 
-        <div class="section">
-            <ui:insert name="content">
-                <ui:include src="content.xhtml"/>
-            </ui:insert>
-        </div>
+    <div class="section">
+        <ui:insert name="content">
+            <ui:include src="template/content.xhtml"/>
+        </ui:insert>
+    </div>
 
-        <div class="section">
-            <ui:insert name="footer">
-                <ui:include src="footer.xhtml"/>
-            </ui:insert>
-        </div>
+    <div class="section">
+        <ui:insert name="footer">
+            <ui:include src="template/footer.xhtml"/>
+        </ui:insert>
+    </div>
 </h:body>
 </html>

@@ -13,14 +13,7 @@ import java.util.stream.Collectors;
 @Data
 public class SumDiscountCalculator
 {
-    @Value("${delivery.price}")
-    private static double deliveryPrice;
-    @Value("${discounted.coffee.type.name}")
-    private static String discountedCoffeeType;
-    @Value("${discounted.coffee.cup.num}")
-    private static int discountedCupNum;
-    @Value("${delivery.free.amount.reached}")
-    private static double deliveryFreeSum;
+
 
     /**
      * get Total sum of all ordered items with or without delivery
@@ -56,9 +49,9 @@ public class SumDiscountCalculator
      */
     public static double getItemCostSum(OrderItemDTO orderItem)
     {
-        if(orderItem.getCoffeeType().getName().contentEquals(discountedCoffeeType))
+        if(orderItem.getCoffeeType().getName().contentEquals(CoffeeProperties.getProps().getDiscountedCoffeeType()))
         {
-            return (orderItem.getQuantity() - Math.floor(orderItem.getQuantity() / discountedCupNum)) * orderItem.getCoffeeType().getPrice();
+            return (orderItem.getQuantity() - Math.floor(orderItem.getQuantity() / CoffeeProperties.getProps().getDiscountedCupNum())) * orderItem.getCoffeeType().getPrice();
         }
         else
         {
@@ -74,12 +67,12 @@ public class SumDiscountCalculator
     public static double getDeliveryPrice(OrderDTO order)
     {
         double orderSum = getItemsCostSum(order);
-        return (orderSum > deliveryFreeSum) ? 0 : deliveryPrice;
+        return (orderSum > CoffeeProperties.getProps().getDeliveryFreeSum()) ? 0 : CoffeeProperties.getProps().getDeliveryPrice();
     }
 
     private static double getDeliveryPrice(double orderSum)
     {
-        return (orderSum > deliveryFreeSum) ? 0 : deliveryPrice;
+        return (orderSum > CoffeeProperties.getProps().getDeliveryFreeSum()) ? 0 : CoffeeProperties.getProps().getDeliveryPrice();
     }
 
     /**
