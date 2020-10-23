@@ -20,23 +20,33 @@
 
   </application>
 
-  <navigation-rule>
-    <from-view-id>/home.xhtml</from-view-id>
-    <navigation-case>
-      <from-outcome>success</from-outcome>
-      <to-view-id>/delivery.xhtml</to-view-id>
-      <redirect/>
-    </navigation-case>
-  </navigation-rule>
+<!--  <navigation-rule>-->
+<!--    <from-view-id>/home.xhtml</from-view-id>-->
+<!--    <navigation-case>-->
+<!--      <from-outcome>success</from-outcome>-->
+<!--      <to-view-id>/delivery.xhtml</to-view-id>-->
+<!--    </navigation-case>-->
+<!--  </navigation-rule>-->
 
-  <navigation-rule>
-    <from-view-id>/delivery.xhtml</from-view-id>
-    <navigation-case>
-      <from-outcome>success</from-outcome>
-      <to-view-id>/order-summary.xhtml</to-view-id>
-      <redirect/>
-    </navigation-case>
-  </navigation-rule>
+<!--  <navigation-rule>-->
+<!--    <from-view-id>/delivery.xhtml</from-view-id>-->
+<!--    <navigation-case>-->
+<!--      <from-outcome>success</from-outcome>-->
+<!--      <to-view-id>/order-summary.xhtml</to-view-id>-->
+<!--    </navigation-case>-->
+<!--    <navigation-case>-->
+<!--      <to-view-id>/home.xhtml</to-view-id>-->
+<!--    </navigation-case>-->
+<!--  </navigation-rule>-->
 
+<!--  <navigation-rule>-->
+<!--    <from-view-id>/order-summary.xhtml</from-view-id>-->
+<!--    <navigation-case>-->
+<!--      <to-view-id>/home.xhtml</to-view-id>-->
+<!--    </navigation-case>-->
+<!--    <navigation-case>-->
+<!--      <to-view-id>/delivery.xhtml</to-view-id>-->
+<!--    </navigation-case>-->
+<!--  </navigation-rule>-->
 
 </faces-config>

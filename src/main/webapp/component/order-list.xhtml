@@ -10,90 +10,128 @@
     <ui:component>
         <f:view locale="#{localeBean.locale}">
             <rich:panel header="#{msg['orderFormHeader']}">
-                <rich:dataTable value="#{coffeeOrderView.orderedItems}" var="orderItem">
+                <h:form>
+                    <rich:dataTable value="#{coffeeOrderView.orderedItems}" var="orderItem">
 
-                    <f:facet name="header">
-                        <rich:columnGroup>
-                            <rich:column>
-                                <h:panelGroup>
-                                    <h:outputText value="#{msg['itemTitleColumn']}"/>
-                                </h:panelGroup>
-                            </rich:column>
+                        <f:facet name="header">
+                            <rich:columnGroup>
+                                <rich:column>
+                                    <h:panelGroup>
+                                        <h:outputText value="#{msg['itemTitleColumn']}"/>
+                                    </h:panelGroup>
+                                </rich:column>
 
-                            <rich:column>
-                                <h:panelGroup>
-                                    <h:outputText value="#{msg['priceColumn']}"/>
-                                </h:panelGroup>
-                            </rich:column>
+                                <rich:column>
+                                    <h:panelGroup>
+                                        <h:outputText value="#{msg['priceColumn']}"/>
+                                    </h:panelGroup>
+                                </rich:column>
 
-                            <rich:column>
-                                <h:panelGroup>
-                                    <h:outputText value="#{msg['quantityColumn']}"/>
-                                </h:panelGroup>
-                            </rich:column>
+                                <rich:column>
+                                    <h:panelGroup>
+                                        <h:outputText value="#{msg['quantityColumn']}"/>
+                                    </h:panelGroup>
+                                </rich:column>
 
-                            <rich:column>
-                                <h:panelGroup>
-                                    <h:outputText value="#{msg['totalPriceColumn']}"/>
-                                </h:panelGroup>
-                            </rich:column>
-                        </rich:columnGroup>
-                    </f:facet>
+                                <rich:column>
+                                    <h:panelGroup>
+                                        <h:outputText value="#{msg['totalPriceColumn']}"/>
+                                    </h:panelGroup>
+                                </rich:column>
+                            </rich:columnGroup>
+                        </f:facet>
 
-                    <rich:column>
-                        <h:outputText value="#{orderItem.coffeeType.name}"/>
-                    </rich:column>
+                        <rich:column>
+                            <h:outputText value="#{orderItem.coffeeType.name}"/>
+                        </rich:column>
 
-                    <rich:column>
-                        <h:outputText value="#{orderItem.coffeeType.price}">
-                            <f:convertNumber type="currency" currencySymbol="#{msg['currency']}"/>
-                        </h:outputText>
-                    </rich:column>
+                        <rich:column>
+                            <h:outputText value="#{orderItem.coffeeType.price}">
+                                <f:convertNumber type="currency" currencySymbol="#{msg['currency']}"/>
+                            </h:outputText>
+                        </rich:column>
 
-                    <rich:column>
-                        <h:outputText value="#{orderItem.quantity}"/>
-                    </rich:column>
+                        <rich:column>
+                            <h:outputText value="#{orderItem.quantity}"/>
+                        </rich:column>
 
-                    <rich:column>
-                        <h:outputText value="#{orderItem.totalPrice}">
-                            <f:convertNumber type="currency" currencySymbol="#{msg['currency']}"/>
-                        </h:outputText>
-                    </rich:column>
-                    <f:facet name="footer">
-                        <rich:columnGroup>
-                            <!--           subtotal sum row               -->
-                            <rich:column colspan="3">
-                                <h:outputText value="#{msg['totalPrice']}"/>
-                            </rich:column>
-                            <rich:column colspan="1">
-                                <h:outputText value="#{coffeeOrderView.currentOrder.totalSumWODelivery}"/>
-                            </rich:column>
-                        </rich:columnGroup>
-                        <rich:columnGroup>
-                            <!--            delivery row            -->
-                            <rich:column colspan="3">
-                                <h:outputText value="#{msg['deliveryLabel']}"/>
-                            </rich:column>
-                            <rich:column colspan="1">
-                                <h:outputText value="#{coffeeOrderView.currentOrder.deliveryPrice}"/>
-                            </rich:column>
-                        </rich:columnGroup>
-                        <rich:columnGroup>
-                            <!--            total sum row               -->
-                            <rich:column colspan="3">
-                                <h:outputText value="#{msg['totalPrice']}"/>
-                            </rich:column>
-                            <rich:column colspan="1">
-                                <h:outputText value="#{coffeeOrderView.currentOrder.totalSum}"/>
-                            </rich:column>
-                        </rich:columnGroup>
-                    </f:facet>
-                </rich:dataTable>
+                        <rich:column>
+                            <h:outputText value="#{orderItem.totalPrice}">
+                                <f:convertNumber type="currency" currencySymbol="#{msg['currency']}"/>
+                            </h:outputText>
+                        </rich:column>
+                        <f:facet name="footer">
+                            <rich:columnGroup>
+                                <!--           subtotal sum row               -->
+                                <rich:column colspan="3">
+                                    <h:outputText value="#{msg['totalPrice']}"/>
+                                </rich:column>
+                                <rich:column colspan="1">
+                                    <h:outputText value="#{coffeeOrderView.currentOrder.totalSumWODelivery}"/>
+                                </rich:column>
+                            </rich:columnGroup>
+                            <rich:columnGroup>
+                                <!--            delivery row            -->
+                                <rich:column colspan="3">
+                                    <h:outputText value="#{msg['deliveryLabel']}"/>
+                                </rich:column>
+                                <rich:column colspan="1">
+                                    <h:outputText value="#{coffeeOrderView.currentOrder.deliveryPrice}"/>
+                                </rich:column>
+                            </rich:columnGroup>
+                            <rich:columnGroup>
+                                <!--            total sum row               -->
+                                <rich:column colspan="3">
+                                    <h:outputText value="#{msg['totalPrice']}"/>
+                                </rich:column>
+                                <rich:column colspan="1">
+                                    <h:outputText value="#{coffeeOrderView.currentOrder.totalSum}"/>
+                                </rich:column>
+                            </rich:columnGroup>
+                        </f:facet>
+                    </rich:dataTable>
+                    <h:panelGrid columns="3" width="100%" cellpadding="10" cellspacing="1" columnClasses="col">
 
-                <a4j:commandButton value="#{msg['confirmOrder']}">
+                        <h:commandButton value="#{msg['confirm']}">
+                            <a4j:ajax execute="#{coffeeOrderView.confirmOrder()}"
+                                      oncomplete="#{rich:component('orderResultPopup')}.show();"
+                                      render="errMsg"/>
+                        </h:commandButton>
 
-                </a4j:commandButton>
+                        <h:commandButton value="#{msg['back']}" execute="@this" immediate="true" action="delivery"/>
+
+                        <h:commandButton value="#{msg['cancel']}">
+                            <a4j:ajax execute="#{coffeeOrderView.cancelOrder()}"
+                                      oncomplete="#{rich:component('orderResultPopup')}.show();"/>
+                        </h:commandButton>
+
+                    </h:panelGrid>
+                </h:form>
             </rich:panel>
+
+
+            <rich:popupPanel id="orderResultPopup" resizeable="false" modal="false" autosized="true">
+                <f:facet name="header">
+                    <h:outputText value="#{msg['orderStatus']}"/>
+                </f:facet>
+                <f:facet name="controls">
+                    <h:outputLink value="#" onclick="#{rich:component('orderResultPopup')}.hide(); return false;">
+                        X
+                    </h:outputLink>
+                </f:facet>
+                <h:form>
+                    <h:panelGrid columns="1" cellpadding="10" cellspacing="1">
+                        <h:outputText value="#{msg['orderStatusSuccess']}" rendered="#{coffeeOrderView.isSuccess}"/>
+
+                        <h:outputText value="#{msg['orderStatusCancelled']}"
+                                      rendered="#{not coffeeOrderView.isSuccess}"/>
+                        <h:outputText value="#{coffeeOrderView.string}" id="errMsg"
+                                      rendered="#{not coffeeOrderView.isSuccess}"/>
+
+                        <h:commandButton value="Ok" action="home" execute="@this" immediate="true"/>
+                    </h:panelGrid>
+                </h:form>
+            </rich:popupPanel>
 
         </f:view>
 

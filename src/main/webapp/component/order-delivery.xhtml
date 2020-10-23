@@ -27,8 +27,13 @@
 
                     </h:panelGrid>
 
-                    <h:commandButton value="#{msg['makeAnOrder']}" execute="@form"
-                                     action="order-summary?faces-redirect=true"/>
+
+                    <h:panelGrid columns="2" cellpadding="10" cellspacing="1">
+                        <h:commandButton value="#{msg['makeAnOrder']}" execute="@form"
+                                         action="order-summary"/>
+
+                        <h:commandButton value="#{msg['back']}" execute="@this" immediate="true" action="home" />
+                    </h:panelGrid>
 
                 </h:form>
 

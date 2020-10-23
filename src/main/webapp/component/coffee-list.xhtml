@@ -11,71 +11,73 @@
 <h:body>
     <ui:component>
         <f:view locale="#{localeBean.locale}">
-        <rich:panel>
-            <h:form>
-                <rich:dataTable value="#{coffeeOrderView.currentOrder.itemsDTO}" var="listItem" id="listTable">
+            <rich:panel>
+                <h:form>
+                    <rich:dataTable value="#{coffeeOrderView.currentOrder.itemsDTO}" var="listItem" id="listTable">
 
 
-                    <!--order Column-->
-                    <rich:column id="isAddedToOrderColumn">
-                        <f:facet name="header">
-                            <h:panelGroup>
-                                <h:outputText value="#{msg['ordered']}"/>
-                            </h:panelGroup>
-                        </f:facet>
-                        <h:selectBooleanCheckbox id="isOrdered" value="#{listItem.isOrdered}">
-                            <a4j:ajax event="click" execute="@this" render="quantitySpinner"/>
-                        </h:selectBooleanCheckbox>
-                    </rich:column>
+                        <!--order Column-->
+                        <rich:column id="isAddedToOrderColumn">
+                            <f:facet name="header">
+                                <h:panelGroup>
+                                    <h:outputText value="#{msg['ordered']}"/>
+                                </h:panelGroup>
+                            </f:facet>
+                            <h:selectBooleanCheckbox id="isOrdered" value="#{listItem.isOrdered}">
+                                <a4j:ajax event="click" execute="@this" render="quantitySpinner"/>
+                            </h:selectBooleanCheckbox>
+                        </rich:column>
 
 
-                    <!--coffee Type Column-->
-                    <rich:column id="itemNameColumn">
-                        <f:facet name="header">
-                            <h:panelGroup>
-                                <h:outputText value="#{msg['itemTitleColumn']}"/>
-                            </h:panelGroup>
-                        </f:facet>
-                        <h:outputText value="#{listItem.coffeeType.name}"/>
-                        <h:outputText value="*" rendered="#{listItem.coffeeType.name eq coffeeProperties.discountedCoffeeType}"/>
-                    </rich:column>
+                        <!--coffee Type Column-->
+                        <rich:column id="itemNameColumn">
+                            <f:facet name="header">
+                                <h:panelGroup>
+                                    <h:outputText value="#{msg['itemTitleColumn']}"/>
+                                </h:panelGroup>
+                            </f:facet>
+                            <h:outputText value="#{listItem.coffeeType.name}"/>
+                            <h:outputText value="*"
+                                          rendered="#{listItem.coffeeType.name eq coffeeProperties.discountedCoffeeType}"/>
+                        </rich:column>
 
 
-                    <!--coffee price column -->
-                    <rich:column id="priceColumn">
-                        <f:facet name="header">
-                            <h:panelGroup>
-                                <h:outputText value="#{msg['priceColumn']}"/>
-                            </h:panelGroup>
-                        </f:facet>
-                        <h:outputText value="#{listItem.coffeeType.price}">
-                            <f:convertNumber type="currency" currencySymbol="#{msg['currency']}"/>
-                        </h:outputText>
-                    </rich:column>
+                        <!--coffee price column -->
+                        <rich:column id="priceColumn">
+                            <f:facet name="header">
+                                <h:panelGroup>
+                                    <h:outputText value="#{msg['priceColumn']}"/>
+                                </h:panelGroup>
+                            </f:facet>
+                            <h:outputText value="#{listItem.coffeeType.price}">
+                                <f:convertNumber type="currency" currencySymbol="#{msg['currency']}"/>
+                            </h:outputText>
+                        </rich:column>
 
 
-                    <!-- quantity column-->
-                    <rich:column id="quantityColumn">
-                        <f:facet name="header">
-                            <h:panelGroup>
-                                <h:outputText value="#{msg['quantityColumn']}"/>
-                            </h:panelGroup>
-                        </f:facet>
-                        <rich:inputNumberSpinner id="quantitySpinner" value="#{listItem.quantity}" validator="#{validatorBean.quantityValidator}" minValue="-100">
-                            <a4j:ajax event="change" execute="@this" render="isOrdered"/>
-                        </rich:inputNumberSpinner>
-                        <rich:message id="errMsg" for="quantitySpinner" ajaxRendered="true"/>
-                    </rich:column>
-                </rich:dataTable>
-                <h:inputHidden validator="#{validatorBean.orderFormValidation}" id="anySelect"/>
-                <rich:message id="nothingSelectedMsg" for="anySelect"/>
+                        <!-- quantity column-->
+                        <rich:column id="quantityColumn">
+                            <f:facet name="header">
+                                <h:panelGroup>
+                                    <h:outputText value="#{msg['quantityColumn']}"/>
+                                </h:panelGroup>
+                            </f:facet>
+                            <rich:inputNumberSpinner id="quantitySpinner" value="#{listItem.quantity}"
+                                                     validator="#{validatorBean.quantityValidator}" minValue="-100">
+                                <a4j:ajax event="change" execute="@this" render="isOrdered"/>
+                            </rich:inputNumberSpinner>
+                            <rich:message id="errMsg" for="quantitySpinner" ajaxRendered="true"/>
+                        </rich:column>
+                    </rich:dataTable>
+                    <h:inputHidden validator="#{validatorBean.orderFormValidation}" id="anySelect"/>
+                    <rich:message id="nothingSelectedMsg" for="anySelect"/>
 
-                <!-- make order Btn-->
-                <a4j:commandButton value="#{msg['makeAnOrder']}" execute="@form" action="delivery?faces-redirect=true"/>
-
-            </h:form>
-            <h:outputText value="#{msg['freeCupNum1']} #{coffeeProperties.discountedCupNum} #{msg['freeCupNum2']}"/>
-        </rich:panel>
+                    <h:panelGrid columns="1" cellspacing="10" cellpadding="1">
+                        <h:commandButton value="#{msg['makeAnOrder']}" execute="@form" action="delivery"/>
+                    </h:panelGrid>
+                </h:form>
+                <h:outputText value="#{msg['freeCupNum1']} #{coffeeProperties.discountedCupNum} #{msg['freeCupNum2']}"/>
+            </rich:panel>
 
         </f:view>
     </ui:component>
