@@ -1,0 +1,11 @@
+CREATE SEQUENCE public.order_id_seq;
+
+CREATE TABLE coffee_order
+(
+    id bigint NOT NULL ,
+    order_date_time date,
+    delivery_address character varying,
+    delivery_person character varying,
+    total_sum double precision,
+    CONSTRAINT order_pkey PRIMARY KEY (id)
+);

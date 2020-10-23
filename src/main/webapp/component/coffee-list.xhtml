@@ -13,10 +13,10 @@
         <f:view locale="#{localeBean.locale}">
             <rich:panel>
                 <h:form>
-                    <rich:dataTable value="#{coffeeOrderView.currentOrder.itemsDTO}" var="listItem" id="listTable">
+                    <rich:dataTable value="#{coffeeOrderView.currentOrder.availableItems}" var="listItem" id="listTable">
 
 
-                        <!--order Column-->
+                        <!--coffeeOrder Column-->
                         <rich:column id="isAddedToOrderColumn">
                             <f:facet name="header">
                                 <h:panelGroup>

@@ -3,7 +3,6 @@ package org.example.jsftest.util;
 import lombok.Data;
 import org.example.jsftest.dto.OrderDTO;
 import org.example.jsftest.dto.OrderItemDTO;
-import org.springframework.beans.factory.annotation.Value;
 
 import java.util.stream.Collectors;
 
@@ -84,7 +83,7 @@ public class SumDiscountCalculator
      */
     private static double getItemsCostSum(OrderDTO order)
     {
-        return order.getItemsDTO().stream().filter(OrderItemDTO::getIsOrdered).collect(Collectors.summingDouble(SumDiscountCalculator::getItemCostSum));
+        return order.getAvailableItems().stream().filter(OrderItemDTO::getIsOrdered).collect(Collectors.summingDouble(SumDiscountCalculator::getItemCostSum));
     }
 
 }

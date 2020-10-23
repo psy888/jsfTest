@@ -6,7 +6,6 @@ import org.example.jsftest.dto.OrderItemDTO;
 import org.example.jsftest.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.web.context.annotation.RequestScope;
 import org.springframework.web.context.annotation.SessionScope;
 
 import java.util.List;
@@ -38,7 +37,8 @@ public class CoffeeOrderView
 
     public List<OrderItemDTO> getOrderedItems()
     {
-        return getCurrentOrder().getItemsDTO().stream().filter(OrderItemDTO::getIsOrdered).collect(Collectors.toList());
+        // getCurrentOrder().setOrderItems(currentOrder.getAvailableItems().stream().filter(OrderItemDTO::getIsOrdered).collect(Collectors.toList()));
+        return getCurrentOrder().getOrderedItemsDTO();
     }
 
     public void confirmOrder()

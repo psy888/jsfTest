@@ -3,9 +3,8 @@ package org.example.jsftest.dto;
 import lombok.Builder;
 import lombok.Data;
 import org.example.jsftest.util.SumDiscountCalculator;
-import org.springframework.beans.factory.annotation.Value;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -13,8 +12,9 @@ import java.util.stream.Collectors;
 @Builder
 public class OrderDTO
 {
-    private List<OrderItemDTO> itemsDTO;
-    private LocalDateTime orderDateTime;
+    private List<OrderItemDTO> orderItems;
+    private List<OrderItemDTO> availableItems;
+    private Date orderDateTime;
     private String deliveryAddress;
     private String deliveryPerson;
     private double deliveryPrice;
@@ -46,8 +46,9 @@ public class OrderDTO
 
     public List<OrderItemDTO> getOrderedItemsDTO()
     {
-        List<OrderItemDTO> list =itemsDTO.stream().filter(OrderItemDTO::getIsOrdered).collect(Collectors.toList());
+        List<OrderItemDTO> list = availableItems.stream().filter(OrderItemDTO::getIsOrdered).collect(Collectors.toList());
         return list;
+        // return orderItems;
     }
     // /**
     //  * Map OrderItemDTO into OrderItem Entity

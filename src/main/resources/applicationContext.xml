@@ -15,7 +15,7 @@
     <property name="scopes">
       <map>
         <entry key="view">
-          <bean class="org.example.jsftest.util.ViewScope" />
+          <bean class="org.example.jsftest.util.ViewScope"/>
         </entry>
       </map>
     </property>
