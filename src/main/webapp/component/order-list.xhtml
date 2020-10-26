@@ -94,14 +94,15 @@
 
                         <h:commandButton value="#{msg['confirm']}">
                             <a4j:ajax execute="#{coffeeOrderView.confirmOrder()}"
-                                      oncomplete="#{rich:component('orderResultPopup')}.show();"
-                                      render="errMsg"/>
+                                      render="popupOutput"
+                                      oncomplete="#{rich:component('orderResultPopup')}.show();"/>
                         </h:commandButton>
 
                         <h:commandButton value="#{msg['back']}" execute="@this" immediate="true" action="delivery"/>
 
                         <h:commandButton value="#{msg['cancel']}">
                             <a4j:ajax execute="#{coffeeOrderView.cancelOrder()}"
+                                      render="popupOutput"
                                       oncomplete="#{rich:component('orderResultPopup')}.show();"/>
                         </h:commandButton>
 
@@ -121,14 +122,16 @@
                 </f:facet>
                 <h:form>
                     <h:panelGrid columns="1" cellpadding="10" cellspacing="1">
-                        <h:outputText value="#{msg['orderStatusSuccess']}" rendered="#{coffeeOrderView.string == null}"/>
+                        <h:panelGroup id="popupOutput">
+                            <h:outputText value="#{msg['orderStatusSuccess']}"
+                                          rendered="#{coffeeOrderView.errMsg eq null}"/>
 
-                        <h:outputText value="#{msg['orderStatusCancelled']}"
-                                      rendered="#{not coffeeOrderView.string == null}"/>
-                        <h:outputText value="#{coffeeOrderView.string}" id="errMsg"
-                                      rendered="#{not coffeeOrderView.isSuccess}"/>
-
-                        <h:commandButton value="Ok" action="home" execute="@this" immediate="true"/>
+                            <h:outputText value="#{msg['orderStatusCancelled']}"
+                                          rendered="#{!(coffeeOrderView.errMsg eq null)}"/>
+                            <h:outputText value="#{coffeeOrderView.errMsg}" id="errMsg"/>
+                        </h:panelGroup>
+                        <h:commandButton value="Ok" action="home" execute="@this #{coffeeOrderView.clearErrors()}"
+                                         immediate="true"/>
                     </h:panelGrid>
                 </h:form>
             </rich:popupPanel>

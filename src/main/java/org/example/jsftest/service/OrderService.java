@@ -2,7 +2,6 @@ package org.example.jsftest.service;
 
 import lombok.Data;
 import org.dozer.DozerBeanMapper;
-import org.dozer.loader.api.BeanMappingBuilder;
 import org.example.jsftest.dao.OrderRepository;
 import org.example.jsftest.dto.OrderDTO;
 import org.example.jsftest.dto.OrderItemDTO;
@@ -11,8 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.annotation.SessionScope;
 
-import java.time.Instant;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -75,16 +72,7 @@ public class OrderService
 
     private OrderDTO mapToDTO(CoffeeOrder coffeeOrder)
     {
-        return OrderDTO.builder()
-                .availableItems(coffeeOrder
-                                        .getOrderedItems()
-                                        .stream()
-                                        .map(orderItem -> mapper.map(orderItem,OrderItemDTO.class))
-                                        .collect(Collectors.toList()))
-                .deliveryAddress(coffeeOrder.getDeliveryAddress())
-                .deliveryPerson(coffeeOrder.getDeliveryPerson())
-                .totalSum(coffeeOrder.getTotalSum())
-                .orderDateTime(coffeeOrder.getOrderDateTime()).build();
+        return OrderDTO.builder().availableItems(coffeeOrder.getOrderedItems().stream().map(orderItem -> mapper.map(orderItem, OrderItemDTO.class)).collect(Collectors.toList())).deliveryAddress(coffeeOrder.getDeliveryAddress()).deliveryPerson(coffeeOrder.getDeliveryPerson()).totalSum(coffeeOrder.getTotalSum()).orderDateTime(coffeeOrder.getOrderDateTime()).build();
     }
 
     public List<OrderDTO> findAllOrders()

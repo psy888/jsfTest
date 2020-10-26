@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
 
+import javax.faces.context.FacesContext;
 import java.util.List;
 
 import static java.util.Objects.isNull;
@@ -20,15 +21,14 @@ public class CoffeeOrderView
     @Autowired
     private OrderService orderService;
     private OrderDTO currentOrder;
-    private Boolean isSuccess;
-    private String string;
+    private String errMsg;
+
 
 
     public OrderDTO getCurrentOrder()
     {
         if(isNull(currentOrder))
         {
-            cancelOrder();//clear fields
             currentOrder = orderService.getNewOrderDto();
         }
         return currentOrder;
@@ -41,24 +41,26 @@ public class CoffeeOrderView
 
     public void confirmOrder()
     {
+        errMsg = null;
         try
         {
             orderService.submitOrder(currentOrder);
-            isSuccess = true;
             currentOrder = null;
         }
         catch(Exception e)
         {
-            isSuccess = false;
-            string = e.getLocalizedMessage();
+            errMsg = e.getLocalizedMessage();
         }
     }
 
     public void cancelOrder()
     {
-        this.isSuccess = false;
-        this.string = null;
+        this.errMsg = FacesContext.getCurrentInstance().getApplication().getResourceBundle(FacesContext.getCurrentInstance(),"msg").getString("cancelByUser");
         this.currentOrder = null;
+    }
+
+    public void clearErrors(){
+        errMsg = null;
     }
 
     public List<OrderDTO> getOrdersList()
