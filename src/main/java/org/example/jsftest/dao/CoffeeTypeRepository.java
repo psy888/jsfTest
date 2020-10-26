@@ -1,27 +1,59 @@
 package org.example.jsftest.dao;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import org.example.jsftest.entity.CoffeeType;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.annotations.NamedQueries;
+import org.hibernate.annotations.NamedQuery;
+import org.hibernate.query.Query;
+import org.omg.CORBA.TRANSACTION_MODE;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Repository
+@Data
+@AllArgsConstructor
 public class CoffeeTypeRepository
 {
 
+    @Qualifier("SessionF")
+    private SessionFactory sessionFactory;
 
-    public List<CoffeeType> getAvailableCoffeeTypes(){
-        ArrayList<CoffeeType> list = new ArrayList<>();
-        for(int i = 0; i < 5; i++)
+
+    public List<CoffeeType> getAvailableCoffeeTypes()
+    {
+        Session session = sessionFactory.openSession();
+        List<CoffeeType> coffeeTypes = session.createQuery("from CoffeeType where isEnabled = true").list();
+        session.close();
+        if(coffeeTypes.size() == 0)
+        {
+            addDummyData();
+            coffeeTypes = getAvailableCoffeeTypes();
+        }
+        return coffeeTypes;
+    }
+
+    public void addDummyData()
+    {
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+        for(int i = 0; i < 10; i++)
         {
             CoffeeType ct = new CoffeeType();
             ct.setName("Coffee " + i);
-            ct.setEnabled(true);
-            ct.setPrice((1+i)*2);
-            list.add(ct);
+            ct.setEnabled(i % 2 == 0);
+            ct.setPrice((1 + i) * 2);
+            session.save(ct);
         }
-
-        return list;
+        transaction.commit();
+        session.close();
     }
+
+
 }

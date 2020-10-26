@@ -11,9 +11,9 @@ public class OrderItem
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private CoffeeType coffeeType;
     private int quantity;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private CoffeeOrder coffeeOrder;
 }

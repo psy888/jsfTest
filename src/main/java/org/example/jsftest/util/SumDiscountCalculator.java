@@ -18,15 +18,15 @@ public class SumDiscountCalculator
      * get Total sum of all ordered items with or without delivery
      *
      * @param order
-     * @param withDeliveryTax get sum with delivery
+     * @param withDelivery get sum with delivery
      *
      * @return total sum of order with all discounts
      */
-    public static double getTotal(OrderDTO order, boolean withDeliveryTax)
+    public static double getTotal(OrderDTO order, boolean withDelivery)
     {
         double sum = getItemsCostSum(order);
 
-        if(withDeliveryTax)
+        if(withDelivery)
         {
             return getDeliveryPrice(sum) + sum;
         }
@@ -60,6 +60,7 @@ public class SumDiscountCalculator
 
     /**
      * get delivery price (if order items sum price reached deliveryFreeSum delivery price is 0)
+     * with calculation of order total sum
      * @param order
      * @return delivery price
      */
@@ -69,6 +70,11 @@ public class SumDiscountCalculator
         return (orderSum > CoffeeProperties.getProps().getDeliveryFreeSum()) ? 0 : CoffeeProperties.getProps().getDeliveryPrice();
     }
 
+    /**
+     * Get delivery price based on order total sum without recalculation of order total sum
+     * @param orderSum
+     * @return
+     */
     private static double getDeliveryPrice(double orderSum)
     {
         return (orderSum > CoffeeProperties.getProps().getDeliveryFreeSum()) ? 0 : CoffeeProperties.getProps().getDeliveryPrice();

@@ -38,8 +38,7 @@ public class Application extends SpringBootServletInitializer
         configuration.addAnnotatedClass(CoffeeType.class);
         configuration.addAnnotatedClass(OrderItem.class);
         configuration.addAnnotatedClass(CoffeeOrder.class);
-        StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties());
-        return configuration.buildSessionFactory(builder.build());
+        return configuration.buildSessionFactory();
     }
 
     @Bean

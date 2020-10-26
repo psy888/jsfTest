@@ -121,10 +121,10 @@
                 </f:facet>
                 <h:form>
                     <h:panelGrid columns="1" cellpadding="10" cellspacing="1">
-                        <h:outputText value="#{msg['orderStatusSuccess']}" rendered="#{coffeeOrderView.isSuccess}"/>
+                        <h:outputText value="#{msg['orderStatusSuccess']}" rendered="#{coffeeOrderView.string == null}"/>
 
                         <h:outputText value="#{msg['orderStatusCancelled']}"
-                                      rendered="#{not coffeeOrderView.isSuccess}"/>
+                                      rendered="#{not coffeeOrderView.string == null}"/>
                         <h:outputText value="#{coffeeOrderView.string}" id="errMsg"
                                       rendered="#{not coffeeOrderView.isSuccess}"/>
 

@@ -2,6 +2,7 @@ package org.example.jsftest.service;
 
 import lombok.Data;
 import org.dozer.DozerBeanMapper;
+import org.dozer.loader.api.BeanMappingBuilder;
 import org.example.jsftest.dao.OrderRepository;
 import org.example.jsftest.dto.OrderDTO;
 import org.example.jsftest.dto.OrderItemDTO;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.context.annotation.SessionScope;
 
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -39,20 +41,56 @@ public class OrderService
 
     public OrderDTO getNewOrderDto()
     {
-        return OrderDTO.builder().availableItems(getNewOrderItems()).orderDateTime(Date.from(Instant.now())).build();
+        return OrderDTO.builder().availableItems(getNewOrderItems()).build();
     }
 
+    /**
+     * Map dto to Entity and save it to database
+     *
+     * @param currentOrder
+     *
+     * @throws Exception
+     */
     public void submitOrder(final OrderDTO currentOrder) throws Exception
     {
-        currentOrder.setOrderItems(currentOrder.getOrderedItemsDTO());
-        CoffeeOrder coffeeOrder = new CoffeeOrder();
-        mapper.map(currentOrder, coffeeOrder);
-        coffeeOrder.getOrderItems().forEach(oi->oi.setCoffeeOrder(coffeeOrder));
-        orderRepository.save(coffeeOrder);
-
-        // throw new Exception("DB Error!");
-        //todo map current order to entity and save it to db
-        // System.out.println("ORDER SAVED");
-        // currentOrderDto = null;
+        currentOrder.setOrderDateTime(new Date());
+        CoffeeOrder orderEntity = mapToEntity(currentOrder);
+        orderEntity.getOrderedItems().forEach(oi -> oi.setCoffeeOrder(orderEntity)); //set id to current order for each order item
+        orderRepository.save(orderEntity);
     }
+
+    /**
+     * Map to entity
+     *
+     * @param orderDTO
+     *
+     * @return
+     */
+    private CoffeeOrder mapToEntity(OrderDTO orderDTO)
+    {
+        CoffeeOrder coffeeOrder = new CoffeeOrder();
+        mapper.map(orderDTO, coffeeOrder);
+        return coffeeOrder;
+    }
+
+    private OrderDTO mapToDTO(CoffeeOrder coffeeOrder)
+    {
+        return OrderDTO.builder()
+                .availableItems(coffeeOrder
+                                        .getOrderedItems()
+                                        .stream()
+                                        .map(orderItem -> mapper.map(orderItem,OrderItemDTO.class))
+                                        .collect(Collectors.toList()))
+                .deliveryAddress(coffeeOrder.getDeliveryAddress())
+                .deliveryPerson(coffeeOrder.getDeliveryPerson())
+                .totalSum(coffeeOrder.getTotalSum())
+                .orderDateTime(coffeeOrder.getOrderDateTime()).build();
+    }
+
+    public List<OrderDTO> findAllOrders()
+    {
+        List<OrderDTO> orders = orderRepository.findAll().stream().map(this::mapToDTO).collect(Collectors.toList());
+        return orders;
+    }
+
 }

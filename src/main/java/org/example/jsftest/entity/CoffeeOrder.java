@@ -14,8 +14,8 @@ public class CoffeeOrder
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToMany(mappedBy = "coffeeOrder")
-    private List<OrderItem> orderItems;
+    @OneToMany(mappedBy = "coffeeOrder", fetch = FetchType.EAGER)
+    private List<OrderItem> orderedItems;
     private Date orderDateTime;
     private String deliveryAddress;
     private String deliveryPerson;

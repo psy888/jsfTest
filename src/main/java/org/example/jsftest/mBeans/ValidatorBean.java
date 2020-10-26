@@ -47,7 +47,7 @@ public class ValidatorBean
 
     public void orderFormValidation(final FacesContext facesContext, final UIComponent uiComponent, final Object o) throws ValidatorException
     {
-        if(coffeeOrderView.getCurrentOrder().getOrderedItemsDTO().size() == 0)
+        if(coffeeOrderView.getCurrentOrder().getOrderedItems().size() == 0)
         {
             throw new ValidatorException(new FacesMessage(facesContext.getApplication().getResourceBundle(facesContext, "msg").getString("validatorAnyMsg"), null)); //  get msg from bundle
 

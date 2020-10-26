@@ -1,7 +1,9 @@
 package org.example.jsftest.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.example.jsftest.util.SumDiscountCalculator;
 
 import java.util.Date;
@@ -10,9 +12,11 @@ import java.util.stream.Collectors;
 
 @Data
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class OrderDTO
 {
-    private List<OrderItemDTO> orderItems;
+    private List<OrderItemDTO> orderedItems;
     private List<OrderItemDTO> availableItems;
     private Date orderDateTime;
     private String deliveryAddress;
@@ -31,39 +35,33 @@ public class OrderDTO
         return SumDiscountCalculator.getTotal(this,false);
     }
 
+
+    /**
+     *
+     * @return
+     */
     public double getTotalSum()
     {
         this.totalSum = SumDiscountCalculator.getTotal(this, true);
         return totalSum;
     }
 
+    /**
+     * Get delivery price dependent of total sum of order
+     * @return
+     */
     public double getDeliveryPrice()
     {
         deliveryPrice = SumDiscountCalculator.getDeliveryPrice(this);
         return deliveryPrice;
     }
 
-
-    public List<OrderItemDTO> getOrderedItemsDTO()
+    /**
+     * @return list of ordered items
+     */
+    public List<OrderItemDTO> getOrderedItems()
     {
         List<OrderItemDTO> list = availableItems.stream().filter(OrderItemDTO::getIsOrdered).collect(Collectors.toList());
         return list;
-        // return orderItems;
     }
-    // /**
-    //  * Map OrderItemDTO into OrderItem Entity
-    //  * @param items dto
-    //  */
-    // public void setItemsDTO(final List<OrderItemDTO> items){
-    //     List<OrderItem> entityList = items.stream()
-    //             .filter(OrderItemDTO::isOrdered)
-    //             .map(orderItemDTO -> {
-    //         OrderItem oi = new OrderItem();
-    //         oi.setCoffeeType(orderItemDTO.getCoffeeType());
-    //         oi.setQuantity(orderItemDTO.getQuantity());
-    //         return oi;
-    //     }).collect(Collectors.toList());
-    //     super.setItems(entityList);
-    //
-    // }
 }

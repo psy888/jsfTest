@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static java.util.Objects.isNull;
 
@@ -37,8 +36,7 @@ public class CoffeeOrderView
 
     public List<OrderItemDTO> getOrderedItems()
     {
-        // getCurrentOrder().setOrderItems(currentOrder.getAvailableItems().stream().filter(OrderItemDTO::getIsOrdered).collect(Collectors.toList()));
-        return getCurrentOrder().getOrderedItemsDTO();
+        return getCurrentOrder().getOrderedItems();
     }
 
     public void confirmOrder()
@@ -61,6 +59,11 @@ public class CoffeeOrderView
         this.isSuccess = false;
         this.string = null;
         this.currentOrder = null;
+    }
+
+    public List<OrderDTO> getOrdersList()
+    {
+        return orderService.findAllOrders();
     }
 
 }

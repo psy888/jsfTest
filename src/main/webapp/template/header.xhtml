@@ -8,12 +8,12 @@
 <h:head></h:head>
 <h:body>
     <ui:composition>
-        <h:form>
-            <h:selectOneMenu value="#{localeBean.language}" onchange="submit()">
-                <f:selectItem itemValue="en" itemLabel="English"/>
-                <f:selectItem itemValue="ru" itemLabel="Russian"/>
-            </h:selectOneMenu>
-        </h:form>
+           <h:form>
+                <h:selectOneMenu value="#{localeBean.language}" onchange="submit()">
+                    <f:selectItem itemValue="en" itemLabel="English"/>
+                    <f:selectItem itemValue="ru" itemLabel="Russian"/>
+                </h:selectOneMenu>
+            </h:form>
     </ui:composition>
 </h:body>
 </html>

@@ -1,12 +1,16 @@
 package org.example.jsftest.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.example.jsftest.entity.CoffeeType;
 import org.example.jsftest.util.SumDiscountCalculator;
 
 @Data
 @Builder()
+@NoArgsConstructor
+@AllArgsConstructor
 public class OrderItemDTO
 {
     private CoffeeType coffeeType;
