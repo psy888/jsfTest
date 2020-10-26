@@ -69,11 +69,24 @@ class SumDiscountCalculatorTest
     }
 
     @Test
+    void getTotalSumWODelivery()
+    {
+        OrderItemDTO item = OrderItemDTO.builder().quantity(FREE_CUP_NUM).coffeeType(regular).build();
+        OrderItemDTO item2 = OrderItemDTO.builder().quantity(FREE_CUP_NUM).coffeeType(regular).build();
+        OrderDTO order = mock(OrderDTO.class);
+        when(order.getAvailableItems()).thenReturn(Arrays.asList(item, item2));
+
+        double freeDeliverySum = SumDiscountCalculator.getTotal(order, false);
+        assertThat(freeDeliverySum).isEqualTo(FREE_CUP_NUM * item.getCoffeeType().getPrice() * 2);
+    }
+
+    @Test
     void getFreeDelivery()
     {
         int many = 100;
         OrderItemDTO item = OrderItemDTO.builder().quantity(many).coffeeType(regular).build();
-        OrderDTO order = OrderDTO.builder().availableItems(Arrays.asList(item)).build();
+        OrderDTO order = mock(OrderDTO.class);
+        when(order.getAvailableItems()).thenReturn(Arrays.asList(item));
 
         double freeDeliverySum = SumDiscountCalculator.getTotal(order, true);
         assertThat(freeDeliverySum).isEqualTo(many * item.getCoffeeType().getPrice());
