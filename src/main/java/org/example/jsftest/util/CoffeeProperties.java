@@ -31,6 +31,11 @@ public class CoffeeProperties implements InitializingBean
         instance = this;
     }
 
+    public static void setInstance(final CoffeeProperties instance)
+    {
+        CoffeeProperties.instance = instance;
+    }
+
     public static CoffeeProperties getProps()
     {
         return instance;

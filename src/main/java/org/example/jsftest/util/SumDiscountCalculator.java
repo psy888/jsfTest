@@ -3,6 +3,7 @@ package org.example.jsftest.util;
 import lombok.Data;
 import org.example.jsftest.dto.OrderDTO;
 import org.example.jsftest.dto.OrderItemDTO;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.stream.Collectors;
 
@@ -37,7 +38,6 @@ public class SumDiscountCalculator
     }
 
 
-
     /**
      * if discounted coffee type subtract each discounted cup from total quantity of cups and multiply price
      * else return count * price
@@ -61,7 +61,9 @@ public class SumDiscountCalculator
     /**
      * get delivery price (if order items sum price reached deliveryFreeSum delivery price is 0)
      * with calculation of order total sum
+     *
      * @param order
+     *
      * @return delivery price
      */
     public static double getDeliveryPrice(OrderDTO order)
@@ -72,7 +74,9 @@ public class SumDiscountCalculator
 
     /**
      * Get delivery price based on order total sum without recalculation of order total sum
+     *
      * @param orderSum
+     *
      * @return
      */
     private static double getDeliveryPrice(double orderSum)
@@ -89,7 +93,7 @@ public class SumDiscountCalculator
      */
     private static double getItemsCostSum(OrderDTO order)
     {
-        return order.getAvailableItems().stream().filter(OrderItemDTO::getIsOrdered).collect(Collectors.summingDouble(SumDiscountCalculator::getItemCostSum));
+        return order.getAvailableItems().stream().filter(orderItemDTO -> orderItemDTO.getIsOrdered()).collect(Collectors.summingDouble(SumDiscountCalculator::getItemCostSum));
     }
 
 }
