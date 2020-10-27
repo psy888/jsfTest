@@ -31,29 +31,9 @@ public class Application extends SpringBootServletInitializer
         return application.sources(Application.class);
     }
 
-    public static void main(String[] args) throws Exception
+    public static void main(String[] args)
     {
         SpringApplication.run(Application.class, args);
     }
-    @Bean("snake")
-    public PhysicalNamingStrategy getStrategy(){
-        return new SnakeCasePhysicalNamingStrategy();
-    }
 
-    @Bean(name = "sessionF")
-    public SessionFactory getSessIonFactory(@Qualifier("snake")PhysicalNamingStrategy strategy )
-    {
-        Configuration configuration = new Configuration().configure();
-        configuration.setPhysicalNamingStrategy(strategy);
-        configuration.addAnnotatedClass(CoffeeType.class);
-        configuration.addAnnotatedClass(OrderItem.class);
-        configuration.addAnnotatedClass(CoffeeOrder.class);
-        return configuration.buildSessionFactory();
-    }
-
-    @Bean
-    public DozerBeanMapper getMapper()
-    {
-        return new DozerBeanMapper();
-    }
 }
