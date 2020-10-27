@@ -84,4 +84,7 @@
 Перед выполнением задания рекомендуется создать Git/Mercurial репозиторий,
 в котором вы будете сохранять изменения исходных кодов.
 
+# Запуск
+WildFly + PostgreSQL
+WildFly добавить datasource jndi-name="java:/testDB" 
 
