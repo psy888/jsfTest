@@ -85,6 +85,6 @@
 в котором вы будете сохранять изменения исходных кодов.
 
 # Запуск
-WildFly + PostgreSQL
-WildFly добавить datasource jndi-name="java:/testDB" 
+WildFly + PostgreSQL.
+В WildFly standalone.xml добавить datasource jndi-name="java:/testDB" 
 
