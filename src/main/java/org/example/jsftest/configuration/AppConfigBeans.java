@@ -31,7 +31,7 @@ public class AppConfigBeans
     }
 
     @Bean
-    public org.hibernate.cfg.Configuration getHibernateCinf(@Qualifier("snake") PhysicalNamingStrategy strategy){
+    public org.hibernate.cfg.Configuration getHibernateConf(@Qualifier("snake") PhysicalNamingStrategy strategy){
         org.hibernate.cfg.Configuration configuration = new org.hibernate.cfg.Configuration().configure();
         configuration.setPhysicalNamingStrategy(strategy);
         configuration.addAnnotatedClass(CoffeeType.class);
