@@ -19,7 +19,7 @@ import java.util.List;
 @AllArgsConstructor
 public class OrderRepository
 {
-    @Qualifier("sessionF")
+
     private SessionFactory sessionFactory;
 
     public List<CoffeeOrder> findAll(){

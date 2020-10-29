@@ -22,7 +22,6 @@ import java.util.List;
 public class CoffeeTypeRepository
 {
 
-    @Qualifier("SessionF")
     private SessionFactory sessionFactory;
 
 
