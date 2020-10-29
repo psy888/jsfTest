@@ -1,6 +1,7 @@
 package org.example.jsftest.dao;
 
 import lombok.AllArgsConstructor;
+import lombok.Cleanup;
 import lombok.Data;
 import org.example.jsftest.entity.CoffeeOrder;
 import org.hibernate.Session;
@@ -22,16 +23,17 @@ public class OrderRepository
 
     private SessionFactory sessionFactory;
 
-    public List<CoffeeOrder> findAll(){
-        Session session = sessionFactory.openSession();
+    public List<CoffeeOrder> findAll()
+    {
+        @Cleanup Session session = sessionFactory.openSession();
         List<CoffeeOrder> ordersList = session.createQuery("from CoffeeOrder").list();
-        session.close();
+        // session.close();
         return ordersList;
     }
 
     public void save(CoffeeOrder coffeeOrder)
     {
-        Session session = sessionFactory.openSession();
+        @Cleanup Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
 
         //save ordered items
@@ -40,7 +42,7 @@ public class OrderRepository
         session.save(coffeeOrder);
 
         transaction.commit();
-        session.close();
+        // session.close();
     }
 
 }

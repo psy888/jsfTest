@@ -1,6 +1,7 @@
 package org.example.jsftest.dao;
 
 import lombok.AllArgsConstructor;
+import lombok.Cleanup;
 import lombok.Data;
 import org.example.jsftest.entity.CoffeeType;
 import org.hibernate.Session;
@@ -27,7 +28,7 @@ public class CoffeeTypeRepository
 
     public List<CoffeeType> getAvailableCoffeeTypes()
     {
-        Session session = sessionFactory.openSession();
+        @Cleanup Session session = sessionFactory.openSession();
         List<CoffeeType> coffeeTypes = session.createQuery("from CoffeeType where isEnabled = true").list();
         session.close();
         if(coffeeTypes.size() == 0)
@@ -40,7 +41,7 @@ public class CoffeeTypeRepository
 
     public void addDummyData()
     {
-        Session session = sessionFactory.openSession();
+        @Cleanup Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         for(int i = 0; i < 10; i++)
         {
@@ -51,7 +52,7 @@ public class CoffeeTypeRepository
             session.save(ct);
         }
         transaction.commit();
-        session.close();
+        // session.close();
     }
 
 
