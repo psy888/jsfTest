@@ -32,14 +32,17 @@ public class AppConfigBeans
 
     @Bean
     public org.hibernate.cfg.Configuration getHibernateConf(@Qualifier("snake") PhysicalNamingStrategy strategy){
-        org.hibernate.cfg.Configuration configuration = new org.hibernate.cfg.Configuration().configure();
+        org.hibernate.cfg.Configuration configuration = new org.hibernate.cfg.Configuration();
+        configuration.setProperty("hibernate.connection.driver_class","org.postgresql.Driver");
+        configuration.setProperty("hibernate.connection.datasource", "java:/testDB");
+        configuration.setProperty("hibernate.hbm2ddl.auto","validate");
         configuration.setPhysicalNamingStrategy(strategy);
         configuration.addAnnotatedClass(CoffeeType.class);
         configuration.addAnnotatedClass(OrderItem.class);
         configuration.addAnnotatedClass(CoffeeOrder.class);
         return configuration;
     }
-    @Bean(name = "sessionF")
+    @Bean
     public SessionFactory getSessIonFactory(org.hibernate.cfg.Configuration configuration, Flyway flyway)
     {
         flyway.migrate();
