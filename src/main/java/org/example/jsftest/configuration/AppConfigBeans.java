@@ -24,14 +24,14 @@ public class AppConfigBeans
     @Resource(lookup = "java:/testDB")
     DataSource dataSource;
 
-    @Bean("snake")
+    @Bean
     public PhysicalNamingStrategy getStrategy()
     {
         return new SnakeCasePhysicalNamingStrategy();
     }
 
     @Bean
-    public org.hibernate.cfg.Configuration getHibernateConf(@Qualifier("snake") PhysicalNamingStrategy strategy){
+    public org.hibernate.cfg.Configuration getHibernateConf(PhysicalNamingStrategy strategy){
         org.hibernate.cfg.Configuration configuration = new org.hibernate.cfg.Configuration();
         configuration.setProperty("hibernate.connection.driver_class","org.postgresql.Driver");
         configuration.setProperty("hibernate.connection.datasource", "java:/testDB");
@@ -62,5 +62,7 @@ public class AppConfigBeans
         conf.setDataSource(dataSource);
         return new Flyway(conf);
     }
+
+
 
 }
