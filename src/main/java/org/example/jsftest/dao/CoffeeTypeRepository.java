@@ -5,16 +5,10 @@ import lombok.Cleanup;
 import lombok.Data;
 import org.example.jsftest.entity.CoffeeType;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.annotations.NamedQueries;
-import org.hibernate.annotations.NamedQuery;
-import org.hibernate.query.Query;
-import org.omg.CORBA.TRANSACTION_MODE;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -23,12 +17,12 @@ import java.util.List;
 public class CoffeeTypeRepository
 {
 
-    private SessionFactory sessionFactory;
+    private LocalSessionFactoryBean sessionFactory;
 
 
     public List<CoffeeType> getAvailableCoffeeTypes()
     {
-        @Cleanup Session session = sessionFactory.openSession();
+        @Cleanup Session session = sessionFactory.getObject().openSession();
         List<CoffeeType> coffeeTypes = session.createQuery("from CoffeeType where isEnabled = true").list();
         session.close();
         if(coffeeTypes.size() == 0)
@@ -41,7 +35,7 @@ public class CoffeeTypeRepository
 
     public void addDummyData()
     {
-        @Cleanup Session session = sessionFactory.openSession();
+        @Cleanup Session session = sessionFactory.getObject().openSession();
         Transaction transaction = session.beginTransaction();
         for(int i = 0; i < 10; i++)
         {

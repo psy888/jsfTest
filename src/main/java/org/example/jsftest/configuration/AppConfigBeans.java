@@ -2,20 +2,19 @@ package org.example.jsftest.configuration;
 
 import lombok.Data;
 import org.dozer.DozerBeanMapper;
-import org.example.jsftest.entity.CoffeeOrder;
-import org.example.jsftest.entity.CoffeeType;
-import org.example.jsftest.entity.OrderItem;
 import org.example.jsftest.util.SnakeCasePhysicalNamingStrategy;
 import org.flywaydb.core.Flyway;
 import org.flywaydb.core.api.configuration.ClassicConfiguration;
-import org.hibernate.SessionFactory;
 import org.hibernate.boot.model.naming.PhysicalNamingStrategy;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.orm.hibernate5.HibernateTransactionManager;
+import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
+import org.springframework.transaction.PlatformTransactionManager;
 
 import javax.annotation.Resource;
 import javax.sql.DataSource;
+import java.util.Properties;
 
 @Configuration
 @Data
@@ -31,38 +30,49 @@ public class AppConfigBeans
     }
 
     @Bean
-    public org.hibernate.cfg.Configuration getHibernateConf(PhysicalNamingStrategy strategy){
-        org.hibernate.cfg.Configuration configuration = new org.hibernate.cfg.Configuration();
-        configuration.setProperty("hibernate.connection.driver_class","org.postgresql.Driver");
-        configuration.setProperty("hibernate.connection.datasource", "java:/testDB");
-        configuration.setProperty("hibernate.hbm2ddl.auto","validate");
-        configuration.setPhysicalNamingStrategy(strategy);
-        configuration.addAnnotatedClass(CoffeeType.class);
-        configuration.addAnnotatedClass(OrderItem.class);
-        configuration.addAnnotatedClass(CoffeeOrder.class);
-        return configuration;
-    }
-    @Bean
-    public SessionFactory getSessIonFactory(org.hibernate.cfg.Configuration configuration, Flyway flyway)
-    {
-        flyway.migrate();
-        return configuration.buildSessionFactory();
-    }
-
-    @Bean
     public DozerBeanMapper getMapper()
     {
         return new DozerBeanMapper();
     }
 
-    @Bean
+    @Bean(name = "flyway")
     public Flyway getFlyWay()
     {
         ClassicConfiguration conf = new ClassicConfiguration();
         conf.setDataSource(dataSource);
-        return new Flyway(conf);
+        Flyway flyway = new Flyway(conf);
+        flyway.migrate();
+        return flyway;
     }
 
+    @Bean
+    public LocalSessionFactoryBean sessionFactory(Flyway flyway, PhysicalNamingStrategy physicalNamingStrategy)
+    {
+        LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
+        sessionFactory.setDataSource(dataSource);
+        sessionFactory.setPackagesToScan("org.example.jsftest.entity");
+        sessionFactory.setHibernateProperties(hibernateProperties());
+        sessionFactory.setPhysicalNamingStrategy(physicalNamingStrategy);
+        return sessionFactory;
+    }
+
+    @Bean
+    public PlatformTransactionManager hibernateTransactionManager(LocalSessionFactoryBean sessionFactoryBean)
+    {
+        HibernateTransactionManager transactionManager = new HibernateTransactionManager();
+        transactionManager.setSessionFactory(sessionFactoryBean.getObject());
+        return transactionManager;
+    }
+
+
+    public Properties hibernateProperties()
+    {
+        Properties hibernateProperties = new Properties();
+        hibernateProperties.setProperty("hibernate.connection.driver_class", "org.postgresql.Driver");
+        hibernateProperties.setProperty("hibernate.connection.datasource", "java:/testDB");
+        hibernateProperties.setProperty("hibernate.hbm2ddl.auto", "validate");
+        return hibernateProperties;
+    }
 
 
 }
