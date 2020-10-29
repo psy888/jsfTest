@@ -40,8 +40,9 @@ public class AppConfigBeans
         return configuration;
     }
     @Bean(name = "sessionF")
-    public SessionFactory getSessIonFactory(org.hibernate.cfg.Configuration configuration)
+    public SessionFactory getSessIonFactory(org.hibernate.cfg.Configuration configuration, Flyway flyway)
     {
+        flyway.migrate();
         return configuration.buildSessionFactory();
     }
 
@@ -56,9 +57,7 @@ public class AppConfigBeans
     {
         ClassicConfiguration conf = new ClassicConfiguration();
         conf.setDataSource(dataSource);
-        Flyway flyway = new Flyway(conf);
-        flyway.migrate();
-        return flyway;
+        return new Flyway(conf);
     }
 
 }
